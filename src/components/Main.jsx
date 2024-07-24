@@ -30,7 +30,7 @@ export const Main = () => {
             const offset_y = e.dataTransfer.getData("offset_y");
             x = x - offset_x;
             y = y - offset_y;
-            setData({ ...data, x, y, type });
+            setData({text:"", fontSize:"", fontWeight:"" , x, y, type });
             setOpenModal(true);
             return;
         }
