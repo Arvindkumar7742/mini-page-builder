@@ -19,6 +19,7 @@ export const Sidebar = () => {
                             onDragStart={(e) => {
                                 handleOnDrag(e, item);
                             }}
+                            key={index}
                             className='bg-white rounded-sm p-2 flex flex-row gap-2 items-center'>
                             <GrApps />
                             <p>{item}</p></div>

@@ -1,6 +1,7 @@
 import React from 'react'
 
 export const Modal = ({ data }) => {
+    const editFlag = data.editFlag;
     function changeHandler(e) {
         data.setData((prev) => (
             {
@@ -9,6 +10,14 @@ export const Modal = ({ data }) => {
             }));
     }
     function submitHandler() {
+        if(editFlag){
+            const id = data.data.id;
+            const filteredDraggedElements = data.draggedElements.filter((item) => (item.id !== id));
+            data.setDraggedElements([...filteredDraggedElements, data.data]);
+            data.setEditFlag(false);
+            data.setOpenModal(false);
+            return;
+        }
         data.data.id = new Date().getTime();
         data.setDraggedElements([...data.draggedElements, data.data]);
         console.log(data.draggedElements);
@@ -28,6 +37,7 @@ export const Modal = ({ data }) => {
                         placeholder={`This is ${data.data.type}`}
                         className='outline-none border-2 border-slate-300'
                         onChange={changeHandler}
+                        defaultValue={ editFlag ? data.data.text :""}
                         type="text" id='text' name='text'
                         required
                     />
@@ -50,12 +60,14 @@ export const Modal = ({ data }) => {
                     <input
                         className='outline-none border-2 border-slate-300'
                         onChange={changeHandler}
+                        defaultValue={data.data.fontSize}
                         type="text" id='fontSize' name='fontSize' />
 
                     <label htmlFor="fontWeight">Font Weight</label>
                     <input
                         className='outline-none border-2 border-slate-300'
                         onChange={changeHandler}
+                        defaultValue={data.data.fontWeight}
                         type="text" id='fontWeight' name='fontWeight' />
 
                     <button
