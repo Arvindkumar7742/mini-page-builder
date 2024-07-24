@@ -1,4 +1,5 @@
 import React from 'react'
+import { RxCross2 } from "react-icons/rx";
 
 export const Modal = ({ data }) => {
     const editFlag = data.editFlag;
@@ -9,8 +10,9 @@ export const Modal = ({ data }) => {
                 [e.target.name]: e.target.value
             }));
     }
-    function submitHandler() {
-        if(editFlag){
+    function submitHandler(e) {
+        e.preventDefault();
+        if (editFlag) {
             const id = data.data.id;
             const filteredDraggedElements = data.draggedElements.filter((item) => (item.id !== id));
             data.setDraggedElements([...filteredDraggedElements, data.data]);
@@ -20,58 +22,74 @@ export const Modal = ({ data }) => {
         }
         data.data.id = new Date().getTime();
         data.setDraggedElements([...data.draggedElements, data.data]);
-        console.log(data.draggedElements);
         data.setOpenModal(false);
     }
     return (
-        <div className='fixed inset-1 grid place-items-center backdrop-dark'>
-            <div className='flex flex-col border-[1px] bg-white p-6 rounded-md'>
-                <div className='font-bold text-2xl'>
-                    Edit {data.data.type}
+        <div className='fixed inset-0 grid place-items-center backdrop-dark'>
+            <div className='flex flex-col gap-1 border-[1px] bg-white rounded-md w-[450px]'>
+                <div className='flex flex-row justify-between items-center p-5'>
+                    <div className='font-semibold text-xl'>
+                        Edit {data.data.type}
+                    </div>
+                    <div className='text-xl'>
+                        <button
+                            onClick={() => {
+                                data.setOpenModal(false);
+                                data.setEditFlag(false);
+                            }}><RxCross2 /></button>
+                    </div>
                 </div>
+                <div className='w-full h-[1px] bg-[#AFB2BF]'></div>
                 <form onSubmit={submitHandler}
-                className='flex flex-col border-[1px] bg-white p-6 rounded-md'
+                    className='flex flex-col gap-5 bg-white rounded-md p-5'
                 >
-                    <label htmlFor="text">Text</label>
-                    <input
-                        placeholder={`This is ${data.data.type}`}
-                        className='outline-none border-2 border-slate-300'
-                        onChange={changeHandler}
-                        defaultValue={ editFlag ? data.data.text :""}
-                        type="text" id='text' name='text'
-                        required
-                    />
+                    <div className='flex flex-col'>
+                        <label htmlFor="text">Text</label>
+                        <input
+                            placeholder={`Enter is text`}
+                            className='outline-none border-2 border-slate-300'
+                            onChange={changeHandler}
+                            defaultValue={editFlag ? data.data.text : ""}
+                            type="text" id='text' name='text'
+                            required
+                        />
+                    </div>
 
-                    <label htmlFor="x">x</label>
-                    <input
-                        className='outline-none border-2 border-slate-300'
-                        onChange={changeHandler}
-                        defaultValue={data.data.x}
-                        type="text" id='x' name='x' />
+                    <div className='flex flex-col'>
+                        <label htmlFor="x">x</label>
+                        <input
+                            className='outline-none border-2 border-slate-300'
+                            onChange={changeHandler}
+                            defaultValue={data.data.x}
+                            type="text" id='x' name='x' />
+                    </div>
+                    <div className='flex flex-col'>
+                        <label htmlFor="y">y</label>
+                        <input
+                            className='outline-none border-2 border-slate-300'
+                            onChange={changeHandler}
+                            defaultValue={data.data.y}
+                            type="text" id='y' name='y' />
+                    </div>
+                    <div className='flex flex-col'>
+                        <label htmlFor="fontSize">Font Size</label>
+                        <input
+                            className='outline-none border-2 border-slate-300'
+                            onChange={changeHandler}
+                            defaultValue={editFlag ? data.data.fontSize : ""}
+                            type="text" id='fontSize' name='fontSize' />
 
-                    <label htmlFor="y">y</label>
-                    <input
-                        className='outline-none border-2 border-slate-300'
-                        onChange={changeHandler}
-                        defaultValue={data.data.y}
-                        type="text" id='y' name='y' />
-
-                    <label htmlFor="fontSize">Font Size</label>
-                    <input
-                        className='outline-none border-2 border-slate-300'
-                        onChange={changeHandler}
-                        defaultValue={data.data.fontSize}
-                        type="text" id='fontSize' name='fontSize' />
-
-                    <label htmlFor="fontWeight">Font Weight</label>
-                    <input
-                        className='outline-none border-2 border-slate-300'
-                        onChange={changeHandler}
-                        defaultValue={data.data.fontWeight}
-                        type="text" id='fontWeight' name='fontWeight' />
-
+                    </div>
+                    <div className='flex flex-col'>
+                        <label htmlFor="fontWeight">Font Weight</label>
+                        <input
+                            className='outline-none border-2 border-slate-300'
+                            onChange={changeHandler}
+                            defaultValue={editFlag ? data.data.fontWeight : ""}
+                            type="text" id='fontWeight' name='fontWeight' />
+                    </div>
                     <button
-                        className='bg-blue-500 rounded-md mt-5 p-2 w-[6/12] text-white'
+                        className='bg-blue-500 rounded-md mt-5 p-1 w-[150px] text-white'
                         type='submit'
                     >Save Changes</button>
                 </form>
