@@ -25,7 +25,7 @@ export const Main = () => {
     }, []);
 
     useEffect(() => {
-        localStorage.setItem('elements', JSON.stringify(draggedElements))
+        localStorage.setItem('elements', JSON.stringify(draggedElements));
     }, [draggedElements]);
 
     function handleOnDrop(e) {
@@ -104,14 +104,18 @@ export const Main = () => {
         <div
             onDrop={handleOnDrop}
             onDragOver={(e) => e.preventDefault()}
-            className='bg-blue-100 w-full h-full relative'
+            className='bg-blue-100 w-full h-full relative overflow-auto p-4'
             onClick={() => setSelectedElement(null)}
         >
             {
-                draggedElements.length >= 1 && <button className='bg-green-500 p-2 text-white absolute rounded-lg top-0 right-0 hover:bg-green-600
-                transition duration-300 ease-in-out'
-                    onClick={handleExport}
-                >EXPORT DATA</button>
+                draggedElements.length >= 1 && (
+                    <button
+                        className='bg-green-500 p-2 text-white absolute rounded-lg top-4 right-4 hover:bg-green-600 transition duration-300 ease-in-out'
+                        onClick={handleExport}
+                    >
+                        EXPORT DATA
+                    </button>
+                )
             }
             {draggedElements && draggedElements.map((item, index) => (
                 <div
@@ -140,18 +144,21 @@ export const Main = () => {
                     className={`p-1 ${selectedElement == item.id && "border-[2px] border-red-600"}`}
                 >
                     {item.type === "Label" && <div>{item.text}</div>}
-                    {item.type === "Input" && <input
-                        onChange={(e) => handleInputChange(e, item.id)}
-                        className="outline-none border-2 p-2 border-slate-300"
-                        value={item.text}
-                        type="text"
-                    />}
-                    {item.type === 'Button' && <button
-                        className="text-white bg-blue-800 rounded-md p-2 shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50
-                         transition duration-300 ease-in-out transform hover:scale-105"
-                    >
-                        {item.text}
-                    </button>}
+                    {item.type === "Input" && (
+                        <input
+                            onChange={(e) => handleInputChange(e, item.id)}
+                            className="outline-none border-2 p-2 border-slate-300"
+                            value={item.text}
+                            type="text"
+                        />
+                    )}
+                    {item.type === 'Button' && (
+                        <button
+                            className="text-white bg-blue-800 rounded-md p-2 shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 transition duration-300 ease-in-out transform hover:scale-105"
+                        >
+                            {item.text}
+                        </button>
+                    )}
                 </div>
             ))}
             {openModal && <Modal data={{ editFlag, setEditFlag, setData, setOpenModal, draggedElements, setDraggedElements, data }} />}
