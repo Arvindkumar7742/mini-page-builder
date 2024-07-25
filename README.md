@@ -1,70 +1,76 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Drag-and-Drop UI Builder
 
-## Available Scripts
+This repository contains a simple drag-and-drop UI builder created using React. The project allows users to drag elements from a sidebar onto a main canvas area, position them as desired, and configure their properties via a modal dialog.
 
-In the project directory, you can run:
 
-### `npm start`
+## Table of Contents
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. [Project Structure](#project-structure)
+2. [Features](#features)
+3. [Usage](#usage)
+4. [Installation](#installation)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Project Structure
 
-### `npm test`
+```
+my-app/
+│
+├── src/
+│ ├── components/
+│ │ ├── Main.js
+│ │ ├── Sidebar.js
+│ │ └── Modal.js
+│ ├── App.js
+│ ├── App.css
+│ └── index.js
+│
+├── public/
+│ ├── index.html
+│ └── ...
+│
+├── package.json
+├── README.md
+└── ...
+```
+## Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Drag and Drop**: Drag elements from the sidebar and drop them onto the main canvas. After Droping one modal will open from where we can set the configurations.
+- **Edit Elements**: Click on the element that you want to edit and press "Enter" to open a modal and edit their properties.
+- **Delete Elements**: Click and use the `Delete` key to remove elements from the canvas.
+- **Save State**: The state of the elements is saved in `localStorage`.
+- **Export Configuration**: Export the current state of the canvas as a JSON file.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Usages
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. **Dragging Elements**: Drag elements (Label, Input, Button) from the sidebar and drop them onto the main canvas.
+2. **Editing Elements**: Can edit the properties of an existing element on the canvas by selecting and pressing enter.
+3. **Deleting Elements**: Select an element and press the `Delete` key to remove it.
+4. **Exporting Configuration**: Click the "EXPORT DATA" button to download the current configuration as a JSON file.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## Installation
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Follow these steps to run the project locally:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. **Clone the Repository**:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+    ```bash
+    git clone https://github.com/Arvindkumar7742/mini-page-builder.git
+    cd mini-page-builder
+    ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+2. **Install Dependencies**:
 
-## Learn More
+    ```bash
+    npm install
+    ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+3. **Run the Application**:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    ```bash
+    npm start
+    ```
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+4. Open your browser and navigate to `http://localhost:3000`.
