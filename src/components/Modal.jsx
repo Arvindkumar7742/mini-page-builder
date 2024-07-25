@@ -62,7 +62,7 @@ export const Modal = ({ data }) => {
                             className='outline-none border-2 border-slate-300'
                             onChange={changeHandler}
                             defaultValue={data.data.x}
-                            type="text" id='x' name='x' />
+                            type="number" id='x' name='x' />
                     </div>
                     <div className='flex flex-col'>
                         <label htmlFor="y">y</label>
@@ -70,7 +70,7 @@ export const Modal = ({ data }) => {
                             className='outline-none border-2 border-slate-300'
                             onChange={changeHandler}
                             defaultValue={data.data.y}
-                            type="text" id='y' name='y' />
+                            type="number" id='y' name='y' />
                     </div>
                     <div className='flex flex-col'>
                         <label htmlFor="fontSize">Font Size</label>
@@ -78,7 +78,7 @@ export const Modal = ({ data }) => {
                             className='outline-none border-2 border-slate-300'
                             onChange={changeHandler}
                             defaultValue={editFlag ? data.data.fontSize : ""}
-                            type="text" id='fontSize' name='fontSize' />
+                            type="number" id='fontSize' name='fontSize' />
 
                     </div>
                     <div className='flex flex-col'>
@@ -87,7 +87,7 @@ export const Modal = ({ data }) => {
                             className='outline-none border-2 border-slate-300'
                             onChange={changeHandler}
                             defaultValue={editFlag ? data.data.fontWeight : ""}
-                            type="text" id='fontWeight' name='fontWeight' />
+                            type="number" id='fontWeight' name='fontWeight' />
                     </div>
                     <button
                         className='bg-blue-500 rounded-md mt-5 p-1 w-[150px] text-white'

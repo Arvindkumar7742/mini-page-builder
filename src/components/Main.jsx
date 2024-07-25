@@ -7,6 +7,15 @@ export const Main = () => {
     const [selectedElement, setSelectedElement] = useState(null);
     const [editFlag, setEditFlag] = useState(false);
     const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+    const [data, setData] = useState({
+        text: "",
+        x: "",
+        y: "",
+        fontSize: "16",
+        fontWeight: "",
+        type: "",
+        id: ""
+    });
 
     useEffect(() => {
         const storedElements = JSON.parse(localStorage.getItem('elements'));
@@ -18,16 +27,6 @@ export const Main = () => {
     useEffect(() => {
         localStorage.setItem('elements', JSON.stringify(draggedElements))
     }, [draggedElements]);
-
-    const [data, setData] = useState({
-        text: "",
-        x: "",
-        y: "",
-        fontSize: "",
-        fontWeight: "",
-        type: "",
-        id: ""
-    });
 
     function handleOnDrop(e) {
         e.preventDefault();
@@ -41,7 +40,7 @@ export const Main = () => {
             const offset_y = e.dataTransfer.getData("offset_y");
             x = x - offset_x;
             y = y - offset_y;
-            setData({ text: "", fontSize: "", fontWeight: "", x, y, type });
+            setData({ text: "", fontSize: "16", fontWeight: "", x, y, type });
             setOpenModal(true);
             return;
         }
@@ -52,6 +51,7 @@ export const Main = () => {
 
         ele.x = x - dragOffset.x;
         ele.y = y - dragOffset.y;
+        console.log(ele);
         setDraggedElements([...filteredDraggedElements, ele]);
     }
 
@@ -87,6 +87,19 @@ export const Main = () => {
         setDraggedElements(newDraggedElements);
     }
 
+    const handleExport = () => {
+        const jsonConfig = JSON.stringify(draggedElements, null, 2);
+
+        const blob = new Blob([jsonConfig], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'pageConfig.json';
+        link.click();
+        
+        URL.revokeObjectURL(url);
+    };
+
     return (
         <div
             onDrop={handleOnDrop}
@@ -94,6 +107,12 @@ export const Main = () => {
             className='bg-blue-100 w-full h-full relative'
             onClick={() => setSelectedElement(null)}
         >
+            {
+                draggedElements.length >= 1 && <button className='bg-green-500 p-2 text-white absolute rounded-lg top-0 right-0 hover:bg-green-600
+                transition duration-300 ease-in-out'
+                    onClick={handleExport}
+                >EXPORT DATA</button>
+            }
             {draggedElements && draggedElements.map((item, index) => (
                 <div
                     key={index}
@@ -108,27 +127,28 @@ export const Main = () => {
                         }
                     }}
                     style={{
-                        position: 'absolute',
+                        position: "absolute",
                         left: item.x,
                         top: item.y,
-                        fontSize: item.fontSize + "px",
-                        fontWeight: item.fontWeight
+                        fontSize: item.fontSize + "px" || "16px",
+                        fontWeight: item.fontWeight || "normal"
                     }}
                     onClick={(e) => {
                         e.stopPropagation();
                         setSelectedElement(item.id);
                     }}
-                    className={` ${selectedElement == item.id && "border-[4px] border-red-600"}`}
+                    className={`p-1 ${selectedElement == item.id && "border-[2px] border-red-600"}`}
                 >
                     {item.type === "Label" && <div>{item.text}</div>}
                     {item.type === "Input" && <input
                         onChange={(e) => handleInputChange(e, item.id)}
                         className="outline-none border-2 p-2 border-slate-300"
-                        defaultValue={item.text}
+                        value={item.text}
                         type="text"
                     />}
                     {item.type === 'Button' && <button
-                        className="text-white bg-blue-800 rounded-md p-2 shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 transition duration-300 ease-in-out transform hover:scale-105"
+                        className="text-white bg-blue-800 rounded-md p-2 shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50
+                         transition duration-300 ease-in-out transform hover:scale-105"
                     >
                         {item.text}
                     </button>}
