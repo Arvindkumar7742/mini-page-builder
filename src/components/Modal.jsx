@@ -14,14 +14,15 @@ export const Modal = ({ data }) => {
         e.preventDefault();
         if (editFlag) {
             const id = data.data.id;
-            const filteredDraggedElements = data.draggedElements.filter((item) => (item.id !== id));
+            console.log(data?.draggedElements);
+            const filteredDraggedElements = data?.draggedElements.filter((item) => (item.id !== id));
             data.setDraggedElements([...filteredDraggedElements, data.data]);
             data.setEditFlag(false);
             data.setOpenModal(false);
             return;
         }
         data.data.id = new Date().getTime();
-        data.setDraggedElements([...data.draggedElements, data.data]);
+        data.setDraggedElements([...data?.draggedElements, data?.data]);
         data.setOpenModal(false);
     }
     return (

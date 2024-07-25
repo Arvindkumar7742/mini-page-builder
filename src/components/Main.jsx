@@ -1,12 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal } from './Modal';
 
 export const Main = () => {
-    const [draggedElements, setDraggedElements] = useState([]);
+    const [draggedElements, setDraggedElements] = useState(localStorage.getItem('elements') ? JSON.parse(localStorage.getItem('elements')) : []);
     const [openModal, setOpenModal] = useState(null);
     const [selectedElement, setSelectedElement] = useState(null);
     const [editFlag, setEditFlag] = useState(false);
     const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+
+    useEffect(() => {
+        const storedElements = JSON.parse(localStorage.getItem('elements'));
+        if (storedElements) {
+            setDraggedElements(storedElements);
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('elements', JSON.stringify(draggedElements))
+    }, [draggedElements]);
 
     const [data, setData] = useState({
         text: "",
@@ -30,13 +41,13 @@ export const Main = () => {
             const offset_y = e.dataTransfer.getData("offset_y");
             x = x - offset_x;
             y = y - offset_y;
-            setData({text:"", fontSize:"", fontWeight:"" , x, y, type });
+            setData({ text: "", fontSize: "", fontWeight: "", x, y, type });
             setOpenModal(true);
             return;
         }
 
         const id = e.dataTransfer.getData("id");
-        const filteredDraggedElements = draggedElements.filter((item) => item.id !== id);
+        const filteredDraggedElements = draggedElements.filter((item) => item.id != id);
         const ele = draggedElements.find((element) => element.id == id);
 
         ele.x = x - dragOffset.x;
@@ -46,14 +57,14 @@ export const Main = () => {
 
     function enterHandler(id) {
         console.log("enter pressed");
-        const ele = draggedElements.find((element) => element.id === id);
+        const ele = draggedElements.find((element) => element.id == id);
         setData(ele);
         setEditFlag(true);
         setOpenModal(true);
     }
 
     function deleteHandler(id) {
-        const filteredDraggedElements = draggedElements.filter((item) => item.id !== id);
+        const filteredDraggedElements = draggedElements.filter((item) => item.id != id);
         setDraggedElements(filteredDraggedElements);
     }
 
@@ -83,7 +94,7 @@ export const Main = () => {
             className='bg-blue-100 w-full h-full relative'
             onClick={() => setSelectedElement(null)}
         >
-            {draggedElements.map((item, index) => (
+            {draggedElements && draggedElements.map((item, index) => (
                 <div
                     key={index}
                     tabIndex="0"
@@ -117,7 +128,7 @@ export const Main = () => {
                         type="text"
                     />}
                     {item.type === 'Button' && <button
-                        className="text-white bg-blue-800 h-[40px] rounded-md pl-3 pr-3 shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 transition duration-300 ease-in-out transform hover:scale-105"
+                        className="text-white bg-blue-800 rounded-md p-2 shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 transition duration-300 ease-in-out transform hover:scale-105"
                     >
                         {item.text}
                     </button>}
