@@ -52,7 +52,7 @@ export const Modal = ({ data }) => {
                             onChange={changeHandler}
                             defaultValue={editFlag ? data.data.text : ""}
                             type="text" id='text' name='text'
-                            required
+                            required={data.data.type != "Input"}
                         />
                     </div>
 

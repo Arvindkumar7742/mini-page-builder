@@ -146,6 +146,7 @@ export const Main = () => {
                     {item.type === "Label" && <div>{item.text}</div>}
                     {item.type === "Input" && (
                         <input
+                            placeholder='Enter the text'
                             onChange={(e) => handleInputChange(e, item.id)}
                             className="outline-none border-2 p-2 border-slate-300"
                             value={item.text}
